@@ -185,5 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
         formStatus.textContent = 'An error occurred. Please try again or contact us directly.';
         formStatus.className = 'form-status error';
       }
+      finally {
+        submitButton.textContent = originalButtonText;
+        submitButton.disabled = false;
+
+        
+      }
+    });
+  }
         
       }
