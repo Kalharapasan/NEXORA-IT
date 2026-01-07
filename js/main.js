@@ -212,3 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
       role: "Director, E-commerce Co."
     }
   ];
+
+  let currentTestimonial = 0;
+  const testimonialContent = document.querySelector('.testimonial-content');
+  const testimonialAuthor = document.querySelector('.testimonial-author');
+  const testimonialRole = document.querySelector('.testimonial-role');
