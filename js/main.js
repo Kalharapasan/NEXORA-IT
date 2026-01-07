@@ -179,5 +179,9 @@ document.addEventListener('DOMContentLoaded', function() {
           formStatus.textContent = result.message;
           formStatus.className = 'form-status success';
           contactForm.reset();
+        } else {
+          formStatus.textContent = result.message;
+          formStatus.className = 'form-status error';
+        }
         
       }
