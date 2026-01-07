@@ -227,3 +227,12 @@ document.addEventListener('DOMContentLoaded', function() {
         testimonialContent.textContent = `"${testimonials[currentTestimonial].content}"`;
         testimonialAuthor.textContent = testimonials[currentTestimonial].author;
         testimonialRole.textContent = testimonials[currentTestimonial].role;
+        testimonialContent.style.transition = 'opacity 0.5s';
+        testimonialAuthor.style.transition = 'opacity 0.5s';
+        testimonialRole.style.transition = 'opacity 0.5s';
+        testimonialContent.style.opacity = '1';
+        testimonialAuthor.style.opacity = '1';
+        testimonialRole.style.opacity = '1';
+      }, 500);
+    }
+  }
