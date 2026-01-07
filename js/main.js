@@ -40,3 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
       mobileMenuBtn.classList.toggle('active');
       mobileMenu.classList.toggle('active');
     });
+  
+  const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
