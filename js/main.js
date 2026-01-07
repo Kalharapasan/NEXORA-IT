@@ -217,3 +217,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const testimonialContent = document.querySelector('.testimonial-content');
   const testimonialAuthor = document.querySelector('.testimonial-author');
   const testimonialRole = document.querySelector('.testimonial-role');
+  function rotateTestimonials() {
+    if (testimonialContent && testimonialAuthor && testimonialRole) {
+      testimonialContent.style.opacity = '0';
+      testimonialAuthor.style.opacity = '0';
+      testimonialRole.style.opacity = '0';
