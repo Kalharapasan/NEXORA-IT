@@ -125,3 +125,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     statsObserver.observe(statsSection);
   }
+
+  const scrollIndicator = document.querySelector('.scroll-indicator');
+  if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+      const aboutSection = document.querySelector('#about');
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
