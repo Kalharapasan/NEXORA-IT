@@ -109,3 +109,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateCounter();
   };
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) {
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.stat-number');
+          counters.forEach(counter => {
+            animateCounter(counter);
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statsObserver.observe(statsSection);
+  }
