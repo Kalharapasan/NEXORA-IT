@@ -258,3 +258,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
   }
+
+   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
+      mobileMenuBtn.classList.remove('active');
+      mobileMenu.classList.remove('active');
+    }
+  });
