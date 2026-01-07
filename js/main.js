@@ -175,5 +175,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         const result = await response.json();
+        if (result.success) {
+          formStatus.textContent = result.message;
+          formStatus.className = 'form-status success';
+          contactForm.reset();
         
       }
