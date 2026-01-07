@@ -236,3 +236,4 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 500);
     }
   }
+  setInterval(rotateTestimonials, 8000);
