@@ -255,3 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
       imageObserver.observe(img);
     });
   }
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
