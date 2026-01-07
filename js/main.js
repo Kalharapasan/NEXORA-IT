@@ -48,3 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
         mobileMenu.classList.remove('active');
       });
     });
+  
+  document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      }
+    });
+  }
