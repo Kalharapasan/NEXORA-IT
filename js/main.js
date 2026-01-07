@@ -166,22 +166,24 @@ document.addEventListener('DOMContentLoaded', function() {
       submitButton.textContent = 'Sending...';
       submitButton.disabled = true;
       try {
-        
-      } catch (error) {
+            const response = await fetch('php/contact.php', {
+              method: 'POST',
+              body: formData
+            });
 
-        const response = await fetch('php/contact.php', {
-          method: 'POST',
-          body: formData
-        });
+            const result = await response.json();
+            if (result.success) {
+              formStatus.textContent = result.message;
+              formStatus.className = 'form-status success';
+              contactForm.reset();
+            } else {
+              formStatus.textContent = result.message;
+              formStatus.className = 'form-status error';
+            }
+          } catch (error) {
 
-        const result = await response.json();
-        if (result.success) {
-          formStatus.textContent = result.message;
-          formStatus.className = 'form-status success';
-          contactForm.reset();
-        } else {
-          formStatus.textContent = result.message;
-          formStatus.className = 'form-status error';
-        }
+        formStatus.textContent = 'An error occurred. Please try again or contact us directly.';
+        formStatus.className = 'form-status error';
+      }
         
       }
