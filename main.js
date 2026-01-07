@@ -5,3 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.loader').classList.add('hidden');
     }, 1500);
   });
+  const particlesContainer = document.getElementById('particles');
+  
+}
