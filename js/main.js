@@ -87,3 +87,25 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
   });
+
+  const animateCounter = (element) => {
+    const target = parseInt(element.getAttribute('data-target'));
+    const duration = 2000;
+    const increment = target / (duration / 16);
+    let current = 0;
+
+    const updateCounter = () => {
+      current += increment;
+      if (current < target) {
+        element.textContent = Math.floor(current);
+        requestAnimationFrame(updateCounter);
+      } else {
+        element.textContent = target + (element.textContent.includes('%') ? '' : '');
+        if (target === 99) {
+          element.textContent = '99%';
+        }
+      }
+    };
+
+    updateCounter();
+  };
