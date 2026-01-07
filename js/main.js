@@ -265,3 +265,6 @@ document.addEventListener('DOMContentLoaded', function() {
       mobileMenu.classList.remove('active');
     }
   });
+  console.log('Nexora Website Initialized Successfully! 🚀');
+  
+});
