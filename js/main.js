@@ -188,6 +188,9 @@ document.addEventListener('DOMContentLoaded', function() {
       finally {
         submitButton.textContent = originalButtonText;
         submitButton.disabled = false;
+        setTimeout(() => {
+          formStatus.style.display = 'none';
+        }, 5000);
 
         
       }
