@@ -16,3 +16,17 @@ document.addEventListener('DOMContentLoaded', function() {
       particlesContainer.appendChild(particle);
     }
   }
+  const navbar = document.querySelector('.navbar');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', throttle(() => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+  }, 100));
