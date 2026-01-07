@@ -165,3 +165,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const originalButtonText = submitButton.textContent;
       submitButton.textContent = 'Sending...';
       submitButton.disabled = true;
+      try {
+        
+      } catch (error) {
+
+        const response = await fetch('php/contact.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+        
+      }
