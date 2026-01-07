@@ -160,3 +160,4 @@ document.addEventListener('DOMContentLoaded', function() {
   if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
+      const formData = new FormData(contactForm);
