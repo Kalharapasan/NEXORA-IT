@@ -222,3 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
       testimonialContent.style.opacity = '0';
       testimonialAuthor.style.opacity = '0';
       testimonialRole.style.opacity = '0';
+      setTimeout(() => {
+        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+        testimonialContent.textContent = `"${testimonials[currentTestimonial].content}"`;
+        testimonialAuthor.textContent = testimonials[currentTestimonial].author;
+        testimonialRole.textContent = testimonials[currentTestimonial].role;
