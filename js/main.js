@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.querySelector('.loader').classList.add('hidden');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+
   const navbar = document.querySelector('.navbar');
   let lastScroll = 0;
 
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     lastScroll = currentScroll;
   });
 
+
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
 
@@ -40,22 +43,23 @@ document.addEventListener('DOMContentLoaded', function() {
       mobileMenuBtn.classList.toggle('active');
       mobileMenu.classList.toggle('active');
     });
-  
-  const mobileLinks = mobileMenu.querySelectorAll('a');
+
+
+    const mobileLinks = mobileMenu.querySelectorAll('a');
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
         mobileMenuBtn.classList.remove('active');
         mobileMenu.classList.remove('active');
       });
     });
-  
-  document.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
       if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
         mobileMenuBtn.classList.remove('active');
         mobileMenu.classList.remove('active');
       }
     });
   }
+
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       e.preventDefault();
@@ -70,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -87,7 +90,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
   });
-
   const animateCounter = (element) => {
     const target = parseInt(element.getAttribute('data-target'));
     const duration = 2000;
@@ -109,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateCounter();
   };
+
   const statsSection = document.querySelector('.stats-section');
   if (statsSection) {
     const statsObserver = new IntersectionObserver((entries) => {
@@ -154,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
+
   const contactForm = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
 
@@ -217,11 +221,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const testimonialContent = document.querySelector('.testimonial-content');
   const testimonialAuthor = document.querySelector('.testimonial-author');
   const testimonialRole = document.querySelector('.testimonial-role');
+
   function rotateTestimonials() {
     if (testimonialContent && testimonialAuthor && testimonialRole) {
       testimonialContent.style.opacity = '0';
       testimonialAuthor.style.opacity = '0';
       testimonialRole.style.opacity = '0';
+
       setTimeout(() => {
         currentTestimonial = (currentTestimonial + 1) % testimonials.length;
         testimonialContent.textContent = `"${testimonials[currentTestimonial].content}"`;
@@ -236,7 +242,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 500);
     }
   }
+
+
   setInterval(rotateTestimonials, 8000);
+
+
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
@@ -255,19 +265,25 @@ document.addEventListener('DOMContentLoaded', function() {
       imageObserver.observe(img);
     });
   }
+
   if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
   }
 
-   document.addEventListener('keydown', (e) => {
+
+  document.addEventListener('keydown', (e) => {
+    // ESC key closes mobile menu
     if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
       mobileMenuBtn.classList.remove('active');
       mobileMenu.classList.remove('active');
     }
   });
+
+
   console.log('Nexora Website Initialized Successfully! 🚀');
   
 });
+
 
 function debounce(func, wait) {
   let timeout;
