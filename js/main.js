@@ -165,36 +165,50 @@ document.addEventListener('DOMContentLoaded', function() {
       const originalButtonText = submitButton.textContent;
       submitButton.textContent = 'Sending...';
       submitButton.disabled = true;
+
       try {
-            const response = await fetch('php/contact.php', {
-              method: 'POST',
-              body: formData
-            });
+        const response = await fetch('php/contact.php', {
+          method: 'POST',
+          body: formData
+        });
 
-            const result = await response.json();
-            if (result.success) {
-              formStatus.textContent = result.message;
-              formStatus.className = 'form-status success';
-              contactForm.reset();
-            } else {
-              formStatus.textContent = result.message;
-              formStatus.className = 'form-status error';
-            }
-          } catch (error) {
+        const result = await response.json();
 
+        if (result.success) {
+          formStatus.textContent = result.message;
+          formStatus.className = 'form-status success';
+          contactForm.reset();
+        } else {
+          formStatus.textContent = result.message;
+          formStatus.className = 'form-status error';
+        }
+      } catch (error) {
         formStatus.textContent = 'An error occurred. Please try again or contact us directly.';
         formStatus.className = 'form-status error';
-      }
-      finally {
+      } finally {
         submitButton.textContent = originalButtonText;
         submitButton.disabled = false;
         setTimeout(() => {
           formStatus.style.display = 'none';
         }, 5000);
-
-        
       }
     });
   }
-        
-      }
+
+  const testimonials = [
+    {
+      content: "Nexora transformed our business operations completely. The automation tools saved us countless hours, and the POS system is incredibly intuitive. Our revenue has increased by 40% since implementation.",
+      author: "Sarah Mitchell",
+      role: "CEO, Retail Solutions Inc."
+    },
+    {
+      content: "The team at Nexora delivered exactly what we needed. Their POS system is fast, reliable, and the customer support is outstanding. Highly recommended!",
+      author: "John Anderson",
+      role: "Owner, Tech Store"
+    },
+    {
+      content: "Working with Nexora has been a game-changer for our business. The cloud solutions they provided have given us the flexibility we needed to grow.",
+      author: "Emily Chen",
+      role: "Director, E-commerce Co."
+    }
+  ];
