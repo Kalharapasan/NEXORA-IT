@@ -416,3 +416,62 @@ nav a:hover::after {
   font-weight: 300;
   opacity: 0.9;
 }
+
+section {
+  padding: 120px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5em;
+  font-weight: 900;
+  color: var(--primary);
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+}
+
+.section-subtitle {
+  font-size: 1.3em;
+  color: var(--text-light);
+  max-width: 700px;
+  margin: 30px auto 0;
+}
+
+/* About Section */
+.about-image {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.about-text-content {
+  max-width: 900px;
+  margin: 40px auto 0;
+  text-align: center;
+}
+
+.about-text-content p {
+  font-size: 1.2em;
+  line-height: 1.8;
+  color: var(--text-light);
+}
