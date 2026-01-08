@@ -953,3 +953,84 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+
+@media (max-width: 1024px) {
+  .logo {
+    font-size: 4em;
+  }
+
+  .section-title {
+    font-size: 2.8em;
+  }
+
+  .desktop-nav {
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .logo {
+    font-size: 3em;
+  }
+
+  .tagline {
+    font-size: 1.3em;
+  }
+
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-primary, .cta-secondary {
+    width: 100%;
+  }
+
+  section {
+    padding: 80px 20px;
+  }
+
+  .section-title {
+    font-size: 2.2em;
+  }
+
+  .stat-number {
+    font-size: 3em;
+  }
+
+  .testimonial-content {
+    font-size: 1.3em;
+  }
+
+  .contact-form-wrapper {
+    padding: 30px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .services-grid,
+  .pos-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .back-to-top {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
