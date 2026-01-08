@@ -159,3 +159,34 @@ header > * {
   justify-content: center;
   padding: 0 20px;
 }
+
+.cta-primary, .cta-secondary {
+  padding: 18px 45px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1em;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+}
+
+.cta-primary {
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.cta-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.cta-secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
