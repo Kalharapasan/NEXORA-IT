@@ -675,3 +675,8 @@ section {
   font-weight: 600;
   margin-bottom: 5px;
 }
+
+.testimonial-role {
+  font-size: 1em;
+  opacity: 0.8;
+}
