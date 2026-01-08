@@ -127,3 +127,17 @@ header > * {
   position: relative;
   z-index: 2;
 }
+
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 5em;
+  font-weight: 900;
+  letter-spacing: 6px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInDown 1s ease;
+  text-shadow: 0 0 40px rgba(255,255,255,0.3);
+}
