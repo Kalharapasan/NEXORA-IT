@@ -510,3 +510,26 @@ section {
   transform: translateY(-15px);
   box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
+
+.service-card:hover::before {
+  transform: scaleX(1);
+}
+
+.service-icon {
+  font-size: 3.5em;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.service-card h3 {
+  font-size: 1.8em;
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.service-card p {
+  color: var(--text-light);
+  font-size: 1.1em;
+  line-height: 1.8;
+}
