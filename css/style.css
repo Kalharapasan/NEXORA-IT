@@ -836,3 +836,52 @@ footer {
   font-size: 1.3em;
   margin-bottom: 20px;
 }
+
+.footer-section p {
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.footer-address {
+  margin-top: 20px;
+  font-size: 0.95em;
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  font-size: 1.5em;
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-5px);
+}
