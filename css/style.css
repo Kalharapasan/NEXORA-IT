@@ -43,3 +43,7 @@ body {
   z-index: 9999;
   transition: opacity 0.5s, visibility 0.5s;
 }
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
