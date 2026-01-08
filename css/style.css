@@ -359,3 +359,12 @@ nav a:hover::after {
   padding: 20px;
   gap: 0;
 }
+.mobile-menu nav a {
+  color: var(--text-dark);
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.mobile-menu nav a:last-child {
+  border-bottom: none;
+}
