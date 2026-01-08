@@ -1,0 +1,31 @@
+:root {
+  --primary: #1e3c72;
+  --primary-light: #2a5298;
+  --primary-dark: #152a52;
+  --accent: #3d6cb9;
+  --accent-bright: #5a8fd9;
+  --text-dark: #1a1a1a;
+  --text-light: #666;
+  --bg-light: #f9f9f9;
+  --white: #ffffff;
+  --success: #10b981;
+  --error: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
