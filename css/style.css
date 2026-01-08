@@ -269,3 +269,25 @@ header > * {
 .navbar.scrolled .mobile-menu-btn span {
   background: var(--primary);
 }
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8em;
+  font-weight: 900;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+nav {
+  display: flex;
+  gap: 40px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
