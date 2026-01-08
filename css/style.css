@@ -400,3 +400,19 @@ nav a:hover::after {
 .stat-item {
   text-align: center;
 }
+
+.stat-number {
+  font-size: 4em;
+  font-weight: 800;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 1.2em;
+  font-weight: 300;
+  opacity: 0.9;
+}
