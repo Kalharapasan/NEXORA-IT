@@ -13,5 +13,9 @@ define('CONTACT_PHONE_2', '+94 70 671 7131');
 define('CONTACT_WHATSAPP', '+94706717131');
 define('CONTACT_ADDRESS', '218 Doalakanda, Dehiaththakandiya, Sri Lanka');
 
+define('SOCIAL_FACEBOOK', '#');
+define('SOCIAL_TWITTER', '#');
+define('SOCIAL_LINKEDIN', '#');
+define('SOCIAL_INSTAGRAM', '#');
 
 ?>
