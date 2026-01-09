@@ -28,48 +28,62 @@
   <div class="loader">
     <div class="loader-content">
       <div class="loader-logo">NEXORA</div>
+      <div class="loader-spinner"></div>
     </div>
   </div>
 
   <!-- Navigation -->
-  <div class="navbar">
-    <a href="#" class="nav-logo">NEXORA</a>
-    <nav class="desktop-nav">
+  <nav class="navbar">
+    <a href="#" class="nav-logo">
+      <span class="logo-text">NEXORA</span>
+    </a>
+    <div class="desktop-nav">
+      <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#pos">POS Systems</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#team">Team</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
-    </nav>
-    <button class="mobile-menu-btn" id="mobileMenuBtn">
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
       <span></span>
       <span></span>
       <span></span>
     </button>
-  </div>
+  </nav>
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <nav>
+      <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#pos">POS Systems</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#team">Team</a>
       <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 
   <!-- Hero Header -->
-  <header>
+  <header id="home">
     <div class="header-bg"></div>
     <div class="particles" id="particles"></div>
     
     <h1 class="logo">NEXORA</h1>
     <p class="tagline">Empowering Your Business with Smart Software Solutions</p>
+    <p class="sub-tagline">Innovative Technology | Reliable Support | Proven Results</p>
     
     <div class="hero-cta-group">
-      <a href="#contact" class="cta-primary">Get Started</a>
-      <a href="#services" class="cta-secondary">Explore Services</a>
+      <a href="#contact" class="cta-primary">
+        <i class="fas fa-rocket"></i> Get Started
+      </a>
+      <a href="#services" class="cta-secondary">
+        <i class="fas fa-compass"></i> Explore Services
+      </a>
     </div>
 
     <div class="scroll-indicator">
@@ -81,18 +95,22 @@
   <div class="stats-section">
     <div class="stats-container">
       <div class="stat-item">
+        <i class="fas fa-users stat-icon"></i>
         <div class="stat-number" data-target="500">0</div>
         <div class="stat-label">Happy Clients</div>
       </div>
       <div class="stat-item">
+        <i class="fas fa-project-diagram stat-icon"></i>
         <div class="stat-number" data-target="1000">0</div>
         <div class="stat-label">Projects Delivered</div>
       </div>
       <div class="stat-item">
+        <i class="fas fa-user-tie stat-icon"></i>
         <div class="stat-number" data-target="50">0</div>
         <div class="stat-label">Team Members</div>
       </div>
       <div class="stat-item">
+        <i class="fas fa-star stat-icon"></i>
         <div class="stat-number" data-target="99">0</div>
         <div class="stat-label">Satisfaction Rate %</div>
       </div>
