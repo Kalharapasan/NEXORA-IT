@@ -59,4 +59,10 @@ if (isset($_POST['website']) && !empty($_POST['website'])) {
     $errors[] = 'Spam detected';
 }
 
+if (!empty($errors)) {
+    $response['message'] = implode(', ', $errors);
+    echo json_encode($response);
+    exit;
+}
+
 ?>
