@@ -178,6 +178,8 @@ $headers = [
     'X-Mailer: PHP/' . phpversion()
 ];
 
-
+if (!empty($config['cc_emails'])) {
+    $headers[] = 'Cc: ' . implode(', ', $config['cc_emails']);
+}
 
 ?>
