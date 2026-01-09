@@ -35,7 +35,7 @@ $phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
 $subject = isset($_POST['subject']) ? sanitize_input($_POST['subject']) : '';
 $message = isset($_POST['message']) ? sanitize_input($_POST['message']) : '';
 
-errors = [];
+$errors = [];
 
 if (empty($name)) {
     $errors[] = 'Name is required';
@@ -64,5 +64,7 @@ if (!empty($errors)) {
     echo json_encode($response);
     exit;
 }
+
+$email_subject = $config['subject_prefix'] . ' ' . $subject;
 
 ?>
