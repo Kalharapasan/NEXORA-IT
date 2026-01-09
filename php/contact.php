@@ -182,4 +182,11 @@ if (!empty($config['cc_emails'])) {
     $headers[] = 'Cc: ' . implode(', ', $config['cc_emails']);
 }
 
+$mail_sent = mail(
+    $config['recipient_email'],
+    $email_subject,
+    $email_body,
+    implode("\r\n", $headers)
+);
+
 ?>
