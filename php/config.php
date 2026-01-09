@@ -120,5 +120,4 @@ return [
     'testimonials' => $testimonials,
     'meta' => $meta
 ];
-
 ?>
