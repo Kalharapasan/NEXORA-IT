@@ -96,4 +96,29 @@ $meta = [
     'og_type' => 'website'
 ];
 
+return [
+    'company' => [
+        'name' => COMPANY_NAME,
+        'tagline' => COMPANY_TAGLINE,
+        'description' => COMPANY_DESCRIPTION
+    ],
+    'contact' => [
+        'email' => CONTACT_EMAIL,
+        'phone1' => CONTACT_PHONE_1,
+        'phone2' => CONTACT_PHONE_2,
+        'whatsapp' => CONTACT_WHATSAPP,
+        'address' => CONTACT_ADDRESS
+    ],
+    'social' => [
+        'facebook' => SOCIAL_FACEBOOK,
+        'twitter' => SOCIAL_TWITTER,
+        'linkedin' => SOCIAL_LINKEDIN,
+        'instagram' => SOCIAL_INSTAGRAM
+    ],
+    'stats' => $stats,
+    'services' => $services,
+    'testimonials' => $testimonials,
+    'meta' => $meta
+];
+
 ?>
