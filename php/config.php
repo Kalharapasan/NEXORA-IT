@@ -88,5 +88,12 @@ $testimonials = [
     ]
 ];
 
+$meta = [
+    'description' => 'Nexora provides innovative software solutions for businesses. From POS systems to cloud solutions, we empower your business with smart technology.',
+    'keywords' => 'business software, POS systems, cloud solutions, business automation, Sri Lanka, Dehiaththakandiya',
+    'author' => 'Nexora',
+    'og_image' => SITE_URL . '/images/og-image.jpg', // Update with actual image
+    'og_type' => 'website'
+];
 
 ?>
