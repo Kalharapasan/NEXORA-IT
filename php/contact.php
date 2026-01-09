@@ -55,5 +55,8 @@ if (empty($message)) {
     $errors[] = 'Message is required';
 }
 
+if (isset($_POST['website']) && !empty($_POST['website'])) {
+    $errors[] = 'Spam detected';
+}
 
 ?>
