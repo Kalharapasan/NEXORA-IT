@@ -35,4 +35,25 @@ $phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
 $subject = isset($_POST['subject']) ? sanitize_input($_POST['subject']) : '';
 $message = isset($_POST['message']) ? sanitize_input($_POST['message']) : '';
 
+errors = [];
+
+if (empty($name)) {
+    $errors[] = 'Name is required';
+}
+
+if (empty($email)) {
+    $errors[] = 'Email is required';
+} elseif (!validate_email($email)) {
+    $errors[] = 'Invalid email format';
+}
+
+if (empty($subject)) {
+    $errors[] = 'Subject is required';
+}
+
+if (empty($message)) {
+    $errors[] = 'Message is required';
+}
+
+
 ?>
