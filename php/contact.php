@@ -155,4 +155,19 @@ $email_body = "
 </html>
 ";
 
+$email_body_plain = "
+New Contact Form Submission - Nexora Website
+
+Name: $name
+Email: $email
+Phone: " . (!empty($phone) ? $phone : 'Not provided') . "
+Subject: $subject
+
+Message:
+$message
+
+---
+Timestamp: " . date('Y-m-d H:i:s') . "
+";
+
 ?>
