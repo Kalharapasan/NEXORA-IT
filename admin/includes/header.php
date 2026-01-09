@@ -38,6 +38,10 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <i class="fas fa-users"></i>
                     <span>Newsletter Subscribers</span>
                 </a>
+                <a href="team.php" class="nav-item <?php echo $currentPage === 'team' ? 'active' : ''; ?>">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Team Management</span>
+                </a>
                 <a href="settings.php" class="nav-item <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
