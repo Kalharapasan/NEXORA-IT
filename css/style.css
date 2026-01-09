@@ -932,6 +932,19 @@ section {
   gap: 40px;
 }
 
+.team-loading {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-light);
+  font-size: 1.2rem;
+}
+
+.team-loading i {
+  margin-right: 10px;
+  color: var(--primary);
+}
+
 .team-member {
   background: white;
   border-radius: 20px;
