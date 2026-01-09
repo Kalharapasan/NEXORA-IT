@@ -1,18 +1,11 @@
--- ==========================================
--- NEXORA DATABASE SETUP
--- Create database and tables for contact form and newsletter
--- ==========================================
 
--- Create Database
 CREATE DATABASE IF NOT EXISTS nexora_db 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;
 
 USE nexora_db;
 
--- ==========================================
--- CONTACT MESSAGES TABLE
--- ==========================================
+
 CREATE TABLE IF NOT EXISTS contact_messages (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -30,9 +23,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ==========================================
--- NEWSLETTER SUBSCRIBERS TABLE
--- ==========================================
+
 CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -78,7 +69,7 @@ FROM contact_messages
 ORDER BY created_at DESC
 LIMIT 50;
 
--- View: Active Newsletter Subscribers Count
+
 CREATE OR REPLACE VIEW newsletter_stats AS
 SELECT 
     COUNT(*) AS total_subscribers,
@@ -87,11 +78,6 @@ SELECT
     SUM(CASE WHEN DATE(created_at) = CURDATE() THEN 1 ELSE 0 END) AS today_subscriptions
 FROM newsletter_subscribers;
 
--- ==========================================
--- STORED PROCEDURES (Optional)
--- ==========================================
-
--- Procedure: Get Contact Messages by Status
 DELIMITER $$
 CREATE PROCEDURE IF NOT EXISTS GetContactMessagesByStatus(IN msg_status VARCHAR(20))
 BEGIN
@@ -101,7 +87,7 @@ BEGIN
 END$$
 DELIMITER ;
 
--- Procedure: Get Active Subscribers
+
 DELIMITER $$
 CREATE PROCEDURE IF NOT EXISTS GetActiveSubscribers()
 BEGIN
@@ -112,11 +98,7 @@ BEGIN
 END$$
 DELIMITER ;
 
--- ==========================================
--- TRIGGERS FOR AUDIT
--- ==========================================
 
--- Trigger: Before update contact message
 DELIMITER $$
 CREATE TRIGGER IF NOT EXISTS before_contact_message_update
 BEFORE UPDATE ON contact_messages
@@ -128,11 +110,7 @@ BEGIN
 END$$
 DELIMITER ;
 
--- ==========================================
--- INDEXES FOR PERFORMANCE
--- ==========================================
 
--- Additional indexes for better query performance
 ALTER TABLE contact_messages ADD INDEX idx_name_email (name, email);
 ALTER TABLE newsletter_subscribers ADD INDEX idx_status_created (status, created_at);
 
@@ -154,10 +132,10 @@ SHOW TABLES;
 DESCRIBE contact_messages;
 DESCRIBE newsletter_subscribers;
 
--- Display initial counts
+
 SELECT 'Contact Messages' AS table_name, COUNT(*) AS row_count FROM contact_messages
 UNION ALL
 SELECT 'Newsletter Subscribers', COUNT(*) FROM newsletter_subscribers;
 
--- Success message
+
 SELECT 'Database setup completed successfully!' AS status;
