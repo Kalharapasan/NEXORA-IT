@@ -170,4 +170,14 @@ $message
 Timestamp: " . date('Y-m-d H:i:s') . "
 ";
 
+$headers = [
+    'MIME-Version: 1.0',
+    'Content-Type: text/html; charset=UTF-8',
+    'From: ' . $config['from_name'] . ' <' . $config['from_email'] . '>',
+    'Reply-To: ' . $name . ' <' . $email . '>',
+    'X-Mailer: PHP/' . phpversion()
+];
+
+
+
 ?>
