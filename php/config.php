@@ -7,4 +7,11 @@ define('COMPANY_NAME', 'Nexora');
 define('COMPANY_TAGLINE', 'Empowering Your Business with Smart Software Solutions');
 define('COMPANY_DESCRIPTION', 'We specialize in delivering cutting-edge software solutions designed to streamline your business operations.');
 
+define('CONTACT_EMAIL', 'nexorait@outlook.com');
+define('CONTACT_PHONE_1', '+94 77 635 0902');
+define('CONTACT_PHONE_2', '+94 70 671 7131');
+define('CONTACT_WHATSAPP', '+94706717131');
+define('CONTACT_ADDRESS', '218 Doalakanda, Dehiaththakandiya, Sri Lanka');
+
+
 ?>
