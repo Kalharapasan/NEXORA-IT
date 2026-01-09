@@ -67,4 +67,92 @@ if (!empty($errors)) {
 
 $email_subject = $config['subject_prefix'] . ' ' . $subject;
 
+
+$email_body = "
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+        }
+        .content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+        .field {
+            margin-bottom: 20px;
+        }
+        .label {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+        .value {
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>New Contact Form Submission</h1>
+            <p>Nexora Website</p>
+        </div>
+        <div class='content'>
+            <div class='field'>
+                <div class='label'>Name:</div>
+                <div class='value'>" . htmlspecialchars($name) . "</div>
+            </div>
+            <div class='field'>
+                <div class='label'>Email:</div>
+                <div class='value'>" . htmlspecialchars($email) . "</div>
+            </div>
+            <div class='field'>
+                <div class='label'>Phone:</div>
+                <div class='value'>" . (!empty($phone) ? htmlspecialchars($phone) : 'Not provided') . "</div>
+            </div>
+            <div class='field'>
+                <div class='label'>Subject:</div>
+                <div class='value'>" . htmlspecialchars($subject) . "</div>
+            </div>
+            <div class='field'>
+                <div class='label'>Message:</div>
+                <div class='value'>" . nl2br(htmlspecialchars($message)) . "</div>
+            </div>
+        </div>
+        <div class='footer'>
+            <p>This email was sent from the Nexora website contact form</p>
+            <p>Timestamp: " . date('Y-m-d H:i:s') . "</p>
+        </div>
+    </div>
+</body>
+</html>
+";
+
 ?>
