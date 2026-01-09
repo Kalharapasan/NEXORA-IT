@@ -3,6 +3,14 @@ if (!defined('NEXORA_CONFIG')) {
     define('NEXORA_CONFIG', true);
 }
 
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'nexora_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_CHARSET', 'utf8mb4');
+
+
 define('COMPANY_NAME', 'Nexora');
 define('COMPANY_TAGLINE', 'Empowering Your Business with Smart Software Solutions');
 define('COMPANY_DESCRIPTION', 'We specialize in delivering cutting-edge software solutions designed to streamline your business operations.');
@@ -18,9 +26,11 @@ define('SOCIAL_TWITTER', '#');
 define('SOCIAL_LINKEDIN', '#');
 define('SOCIAL_INSTAGRAM', '#');
 
+
 define('MAIL_FROM_EMAIL', 'noreply@nexora.com');
 define('MAIL_FROM_NAME', 'Nexora Website');
 define('MAIL_RECIPIENT', 'nexorait@outlook.com');
+
 
 define('SITE_URL', 'https://www.nexora.com'); 
 define('TIMEZONE', 'Asia/Colombo');
@@ -29,6 +39,37 @@ define('BUSINESS_HOURS', '9:00 AM - 6:00 PM');
 define('BUSINESS_DAYS', 'Monday - Saturday');
 
 date_default_timezone_set(TIMEZONE);
+
+
+function getDBConnection() {
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ];
+        $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+        return $pdo;
+    } catch (PDOException $e) {
+        error_log("Database Connection Error: " . $e->getMessage());
+        return null;
+    }
+}
+
+function sendEmail($to, $subject, $message, $from = null) {
+    $from = $from ?? MAIL_FROM_EMAIL;
+    $fromName = MAIL_FROM_NAME;
+    
+    $headers = "From: {$fromName} <{$from}>\r\n";
+    $headers .= "Reply-To: {$from}\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $message, $headers);
+}
+
+
 $stats = [
     'clients' => 500,
     'projects' => 1000,

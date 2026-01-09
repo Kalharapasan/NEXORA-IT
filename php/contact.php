@@ -1,252 +1,261 @@
-<?php 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('HTTP/1.1 403 Forbidden');
-    exit('Direct access not permitted');
-}
+<?php
+
+
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
 
-$config = [
-    'recipient_email' => 'nexorait@outlook.com',
-    'cc_emails' => [], 
-    'subject_prefix' => '[Nexora Contact Form]',
-    'from_email' => 'noreply@nexora.com',
-    'from_name' => 'Nexora Website',
-];
-$response = [
-    'success' => false,
-    'message' => ''
-];
-
-function sanitize_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-function validate_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-$name = isset($_POST['name']) ? sanitize_input($_POST['name']) : '';
-$email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
-$phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
-$subject = isset($_POST['subject']) ? sanitize_input($_POST['subject']) : '';
-$message = isset($_POST['message']) ? sanitize_input($_POST['message']) : '';
-
-$errors = [];
-
-if (empty($name)) {
-    $errors[] = 'Name is required';
-}
-
-if (empty($email)) {
-    $errors[] = 'Email is required';
-} elseif (!validate_email($email)) {
-    $errors[] = 'Invalid email format';
-}
-
-if (empty($subject)) {
-    $errors[] = 'Subject is required';
-}
-
-if (empty($message)) {
-    $errors[] = 'Message is required';
-}
-
-if (isset($_POST['website']) && !empty($_POST['website'])) {
-    $errors[] = 'Spam detected';
-}
-
-if (!empty($errors)) {
-    $response['message'] = implode(', ', $errors);
-    echo json_encode($response);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Method not allowed. Only POST requests are accepted.'
+    ]);
     exit;
 }
 
-$email_subject = $config['subject_prefix'] . ' ' . $subject;
+require_once 'config.php';
 
-
-$email_body = "
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            border-radius: 10px 10px 0 0;
-        }
-        .content {
-            background: white;
-            padding: 30px;
-            border-radius: 0 0 10px 10px;
-        }
-        .field {
-            margin-bottom: 20px;
-        }
-        .label {
-            font-weight: bold;
-            color: #1e3c72;
-            margin-bottom: 5px;
-        }
-        .value {
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 5px;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px;
-            color: #666;
-            font-size: 12px;
-        }
-    </style>
-</head>
-<body>
-    <div class='container'>
-        <div class='header'>
-            <h1>New Contact Form Submission</h1>
-            <p>Nexora Website</p>
-        </div>
-        <div class='content'>
-            <div class='field'>
-                <div class='label'>Name:</div>
-                <div class='value'>" . htmlspecialchars($name) . "</div>
-            </div>
-            <div class='field'>
-                <div class='label'>Email:</div>
-                <div class='value'>" . htmlspecialchars($email) . "</div>
-            </div>
-            <div class='field'>
-                <div class='label'>Phone:</div>
-                <div class='value'>" . (!empty($phone) ? htmlspecialchars($phone) : 'Not provided') . "</div>
-            </div>
-            <div class='field'>
-                <div class='label'>Subject:</div>
-                <div class='value'>" . htmlspecialchars($subject) . "</div>
-            </div>
-            <div class='field'>
-                <div class='label'>Message:</div>
-                <div class='value'>" . nl2br(htmlspecialchars($message)) . "</div>
-            </div>
-        </div>
-        <div class='footer'>
-            <p>This email was sent from the Nexora website contact form</p>
-            <p>Timestamp: " . date('Y-m-d H:i:s') . "</p>
-        </div>
-    </div>
-</body>
-</html>
-";
-
-$email_body_plain = "
-New Contact Form Submission - Nexora Website
-
-Name: $name
-Email: $email
-Phone: " . (!empty($phone) ? $phone : 'Not provided') . "
-Subject: $subject
-
-Message:
-$message
-
----
-Timestamp: " . date('Y-m-d H:i:s') . "
-";
-
-$headers = [
-    'MIME-Version: 1.0',
-    'Content-Type: text/html; charset=UTF-8',
-    'From: ' . $config['from_name'] . ' <' . $config['from_email'] . '>',
-    'Reply-To: ' . $name . ' <' . $email . '>',
-    'X-Mailer: PHP/' . phpversion()
+$response = [
+    'success' => false,
+    'message' => '',
+    'data' => []
 ];
 
-if (!empty($config['cc_emails'])) {
-    $headers[] = 'Cc: ' . implode(', ', $config['cc_emails']);
-}
+try {
+ 
+    function sanitizeInput($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+        return $data;
+    }
 
-$mail_sent = mail(
-    $config['recipient_email'],
-    $email_subject,
-    $email_body,
-    implode("\r\n", $headers)
-);
+    function validateEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
 
-if ($mail_sent) {
-   
-    $log_entry = date('Y-m-d H:i:s') . " - Contact form submission from: $name ($email)\n";
-    @file_put_contents(__DIR__ . '/../logs/contact_submissions.log', $log_entry, FILE_APPEND);
+    function validatePhone($phone) {
     
-    $response['success'] = true;
-    $response['message'] = 'Thank you for contacting us! We will get back to you soon.';
-} else {
-    $response['message'] = 'Sorry, there was an error sending your message. Please try again or contact us directly at ' . $config['recipient_email'];
-}
+        return preg_match('/^[\d\s\+\-\(\)]{10,}$/', $phone);
+    }
 
-if ($mail_sent) {
-    $auto_reply_subject = 'Thank you for contacting Nexora';
-    $auto_reply_body = "
+
+    $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
+    $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitizeInput($_POST['phone']) : '';
+    $subject = isset($_POST['subject']) ? sanitizeInput($_POST['subject']) : '';
+    $message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : '';
+
+    $errors = [];
+
+    if (empty($name)) {
+        $errors[] = 'Name is required';
+    } elseif (strlen($name) < 2) {
+        $errors[] = 'Name must be at least 2 characters';
+    } elseif (strlen($name) > 100) {
+        $errors[] = 'Name must not exceed 100 characters';
+    }
+
+    if (empty($email)) {
+        $errors[] = 'Email is required';
+    } elseif (!validateEmail($email)) {
+        $errors[] = 'Please enter a valid email address';
+    }
+
+    if (!empty($phone) && !validatePhone($phone)) {
+        $errors[] = 'Please enter a valid phone number';
+    }
+
+    if (empty($subject)) {
+        $errors[] = 'Subject is required';
+    } elseif (strlen($subject) < 3) {
+        $errors[] = 'Subject must be at least 3 characters';
+    } elseif (strlen($subject) > 200) {
+        $errors[] = 'Subject must not exceed 200 characters';
+    }
+
+    if (empty($message)) {
+        $errors[] = 'Message is required';
+    } elseif (strlen($message) < 10) {
+        $errors[] = 'Message must be at least 10 characters';
+    } elseif (strlen($message) > 5000) {
+        $errors[] = 'Message must not exceed 5000 characters';
+    }
+
+    if (!empty($errors)) {
+        $response['message'] = implode('. ', $errors);
+        echo json_encode($response);
+        exit;
+    }
+
+    $db = getDBConnection();
+    
+    if ($db) {
+        try {
+            $sql = "INSERT INTO contact_messages (name, email, phone, subject, message, ip_address, user_agent, created_at) 
+                    VALUES (:name, :email, :phone, :subject, :message, :ip_address, :user_agent, NOW())";
+            
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':name' => $name,
+                ':email' => $email,
+                ':phone' => $phone,
+                ':subject' => $subject,
+                ':message' => $message,
+                ':ip_address' => $_SERVER['REMOTE_ADDR'] ?? 'Unknown',
+                ':user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown'
+            ]);
+
+            $messageId = $db->lastInsertId();
+            $response['data']['message_id'] = $messageId;
+            
+        } catch (PDOException $e) {
+            
+            error_log("Database Error: " . $e->getMessage());
+        }
+    }
+
+ 
+    $emailSubject = "[Nexora Contact Form] " . $subject;
+    
+    $emailMessage = "
     <!DOCTYPE html>
     <html>
     <head>
         <style>
             body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: white; padding: 30px; border: 1px solid #e5e5e5; border-top: none; border-radius: 0 0 10px 10px; }
+            .header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+            .header h1 { margin: 0; font-size: 24px; }
+            .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+            .field { margin-bottom: 20px; padding: 15px; background: white; border-radius: 5px; border-left: 4px solid #3d6cb9; }
+            .field-label { font-weight: bold; color: #1e3c72; margin-bottom: 5px; }
+            .field-value { color: #666; }
+            .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
         </style>
     </head>
     <body>
         <div class='container'>
             <div class='header'>
-                <h1>Thank You for Contacting Nexora</h1>
+                <h1>🔔 New Contact Form Submission</h1>
             </div>
             <div class='content'>
-                <p>Dear " . htmlspecialchars($name) . ",</p>
-                <p>Thank you for reaching out to us. We have received your message and will get back to you as soon as possible.</p>
-                <p><strong>Your message:</strong></p>
-                <p style='background: #f5f5f5; padding: 15px; border-radius: 5px;'>" . nl2br(htmlspecialchars($message)) . "</p>
-                <p>If you have any urgent questions, please feel free to contact us directly:</p>
-                <ul>
-                    <li>Email: nexorait@outlook.com</li>
-                    <li>Phone: +94 77 635 0902 / +94 70 671 7131</li>
-                    <li>WhatsApp: +94 70 671 7131</li>
-                </ul>
-                <p>Best regards,<br>The Nexora Team</p>
+                <div class='field'>
+                    <div class='field-label'>👤 Name:</div>
+                    <div class='field-value'>{$name}</div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>📧 Email:</div>
+                    <div class='field-value'><a href='mailto:{$email}'>{$email}</a></div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>📞 Phone:</div>
+                    <div class='field-value'>{$phone}</div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>📝 Subject:</div>
+                    <div class='field-value'>{$subject}</div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>💬 Message:</div>
+                    <div class='field-value'>" . nl2br($message) . "</div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>🕐 Submitted:</div>
+                    <div class='field-value'>" . date('F j, Y, g:i a') . "</div>
+                </div>
+                <div class='field'>
+                    <div class='field-label'>🌐 IP Address:</div>
+                    <div class='field-value'>" . ($_SERVER['REMOTE_ADDR'] ?? 'Unknown') . "</div>
+                </div>
+            </div>
+            <div class='footer'>
+                <p>This is an automated message from Nexora Website Contact Form</p>
+                <p>&copy; " . date('Y') . " Nexora. All rights reserved.</p>
             </div>
         </div>
     </body>
     </html>
     ";
-    
-    $auto_reply_headers = [
-        'MIME-Version: 1.0',
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Nexora <' . $config['from_email'] . '>',
-        'X-Mailer: PHP/' . phpversion()
-    ];
-    
-    @mail($email, $auto_reply_subject, $auto_reply_body, implode("\r\n", $auto_reply_headers));
+
+    $emailSent = sendEmail(MAIL_RECIPIENT, $emailSubject, $emailMessage, $email);
+
+
+    $confirmSubject = "Thank you for contacting Nexora";
+    $confirmMessage = "
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+            .header h1 { margin: 0; font-size: 24px; }
+            .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+            .message-box { background: white; padding: 20px; border-radius: 5px; margin: 20px 0; }
+            .button { display: inline-block; padding: 12px 30px; background: #3d6cb9; color: white; text-decoration: none; border-radius: 25px; margin: 20px 0; }
+            .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>✅ Message Received!</h1>
+            </div>
+            <div class='content'>
+                <p>Dear {$name},</p>
+                <p>Thank you for contacting <strong>Nexora</strong>. We have received your message and our team will get back to you as soon as possible.</p>
+                
+                <div class='message-box'>
+                    <p><strong>Your Message Details:</strong></p>
+                    <p><strong>Subject:</strong> {$subject}</p>
+                    <p><strong>Message:</strong><br>" . nl2br($message) . "</p>
+                </div>
+
+                <p>We typically respond within 24 hours during business days.</p>
+                <p>If you need immediate assistance, feel free to:</p>
+                <ul>
+                    <li>📞 Call us: " . CONTACT_PHONE_1 . "</li>
+                    <li>💬 WhatsApp: " . CONTACT_WHATSAPP . "</li>
+                </ul>
+
+                <center>
+                    <a href='" . SITE_URL . "' class='button'>Visit Our Website</a>
+                </center>
+
+                <p>Best regards,<br><strong>Nexora Team</strong></p>
+            </div>
+            <div class='footer'>
+                <p>&copy; " . date('Y') . " Nexora. All rights reserved.</p>
+                <p>" . CONTACT_ADDRESS . "</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    ";
+
+    sendEmail($email, $confirmSubject, $confirmMessage);
+
+  
+    $response['success'] = true;
+    $response['message'] = 'Thank you for your message! We\'ll get back to you soon.';
+    $response['data']['email_sent'] = $emailSent;
+    $response['data']['timestamp'] = date('Y-m-d H:i:s');
+
+
+    error_log("Contact form submitted successfully - Name: {$name}, Email: {$email}");
+
+} catch (Exception $e) {
+   
+    $response['success'] = false;
+    $response['message'] = 'An error occurred. Please try again later or contact us directly.';
+    error_log("Contact Form Error: " . $e->getMessage());
 }
+
 
 echo json_encode($response);
 exit;
-
 ?>
