@@ -28,4 +28,5 @@ define('TIMEZONE', 'Asia/Colombo');
 define('BUSINESS_HOURS', '9:00 AM - 6:00 PM');
 define('BUSINESS_DAYS', 'Monday - Saturday');
 
+date_default_timezone_set(TIMEZONE);
 ?>
