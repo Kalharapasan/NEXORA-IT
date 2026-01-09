@@ -39,6 +39,35 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ==========================================
+-- TEAM MEMBERS TABLE
+-- ==========================================
+CREATE TABLE IF NOT EXISTS team_members (
+    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    position VARCHAR(100) NOT NULL,
+    bio TEXT DEFAULT NULL,
+    image_url VARCHAR(500) DEFAULT NULL,
+    linkedin_url VARCHAR(255) DEFAULT NULL,
+    twitter_url VARCHAR(255) DEFAULT NULL,
+    github_url VARCHAR(255) DEFAULT NULL,
+    email VARCHAR(255) DEFAULT NULL,
+    phone VARCHAR(50) DEFAULT NULL,
+    display_order INT(11) DEFAULT 0,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_status (status),
+    INDEX idx_display_order (display_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Insert sample team members
+INSERT INTO team_members (name, position, bio, image_url, linkedin_url, twitter_url, github_url, display_order, status, created_at) VALUES
+('John Anderson', 'Chief Technology Officer', 'Leading technology innovation with over 15 years of experience in software architecture and development.', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop', '#', '#', '#', 1, 'active', NOW()),
+('Sarah Mitchell', 'Lead Developer', 'Full-stack developer passionate about creating elegant solutions to complex problems.', 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop', '#', '#', '#', 2, 'active', NOW()),
+('Michael Chen', 'UX/UI Designer', 'Crafting beautiful and intuitive user experiences that delight users and drive engagement.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop', '#', '#', '#', 3, 'active', NOW()),
+('Emily Roberts', 'Project Manager', 'Ensuring projects are delivered on time and exceed client expectations every time.', 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=400&fit=crop', '#', '#', '#', 4, 'active', NOW());
+
+-- ==========================================
 -- SAMPLE DATA (Optional - for testing)
 -- ==========================================
 
