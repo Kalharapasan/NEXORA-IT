@@ -18,4 +18,8 @@ define('SOCIAL_TWITTER', '#');
 define('SOCIAL_LINKEDIN', '#');
 define('SOCIAL_INSTAGRAM', '#');
 
+define('MAIL_FROM_EMAIL', 'noreply@nexora.com');
+define('MAIL_FROM_NAME', 'Nexora Website');
+define('MAIL_RECIPIENT', 'nexorait@outlook.com');
+
 ?>
