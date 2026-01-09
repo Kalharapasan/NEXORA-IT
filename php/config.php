@@ -22,4 +22,7 @@ define('MAIL_FROM_EMAIL', 'noreply@nexora.com');
 define('MAIL_FROM_NAME', 'Nexora Website');
 define('MAIL_RECIPIENT', 'nexorait@outlook.com');
 
+define('SITE_URL', 'https://www.nexora.com'); 
+define('TIMEZONE', 'Asia/Colombo');
+
 ?>
