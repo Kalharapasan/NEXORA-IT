@@ -473,6 +473,7 @@ body {
 .stat-card.green { border-left: 4px solid var(--success-color); }
 .stat-card.orange { border-left: 4px solid var(--warning-color); }
 .stat-card.purple { border-left: 4px solid #6f42c1; }
+.stat-card.teal { border-left: 4px solid #20c997; }
 
 .stat-icon {
     width: 60px;
@@ -489,6 +490,7 @@ body {
 .stat-card.green .stat-icon { color: var(--success-color); }
 .stat-card.orange .stat-icon { color: var(--warning-color); }
 .stat-card.purple .stat-icon { color: #6f42c1; }
+.stat-card.teal .stat-icon { color: #20c997; }
 
 .stat-content h3 {
     font-size: 2rem;

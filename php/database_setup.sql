@@ -107,6 +107,14 @@ SELECT
     SUM(CASE WHEN DATE(created_at) = CURDATE() THEN 1 ELSE 0 END) AS today_subscriptions
 FROM newsletter_subscribers;
 
+-- View: Team Statistics
+CREATE OR REPLACE VIEW team_stats AS
+SELECT 
+    COUNT(*) AS total_members,
+    SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) AS active_members,
+    SUM(CASE WHEN status = 'inactive' THEN 1 ELSE 0 END) AS inactive_members
+FROM team_members;
+
 DELIMITER $$
 CREATE PROCEDURE IF NOT EXISTS GetContactMessagesByStatus(IN msg_status VARCHAR(20))
 BEGIN
@@ -160,11 +168,14 @@ SHOW TABLES;
 
 DESCRIBE contact_messages;
 DESCRIBE newsletter_subscribers;
+DESCRIBE team_members;
 
 
 SELECT 'Contact Messages' AS table_name, COUNT(*) AS row_count FROM contact_messages
 UNION ALL
-SELECT 'Newsletter Subscribers', COUNT(*) FROM newsletter_subscribers;
+SELECT 'Newsletter Subscribers', COUNT(*) FROM newsletter_subscribers
+UNION ALL
+SELECT 'Team Members', COUNT(*) FROM team_members;
 
 
 SELECT 'Database setup completed successfully!' AS status;

@@ -9,6 +9,13 @@ try {
     $statsQuery = "SELECT * FROM dashboard_stats";
     $stats = $db->query($statsQuery)->fetch(PDO::FETCH_ASSOC);
     
+    // Get team statistics
+    $teamStatsQuery = "SELECT 
+        COUNT(*) as total_members,
+        SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_members
+        FROM team_members";
+    $teamStats = $db->query($teamStatsQuery)->fetch(PDO::FETCH_ASSOC);
+    
     // Get recent messages
     $recentMessagesQuery = "SELECT id, name, email, subject, status, created_at 
                            FROM contact_messages 
@@ -26,6 +33,7 @@ try {
 } catch (Exception $e) {
     error_log("Dashboard error: " . $e->getMessage());
     $stats = [];
+    $teamStats = ['total_members' => 0, 'active_members' => 0];
     $recentMessages = [];
     $recentSubscribers = [];
 }
@@ -71,6 +79,16 @@ try {
             <div class="stat-content">
                 <h3><?php echo $stats['today_subscribers'] ?? 0; ?></h3>
                 <p>Today's Subscribers</p>
+            </div>
+        </div>
+        
+        <div class="stat-card teal">
+            <div class="stat-icon">
+                <i class="fas fa-user-friends"></i>
+            </div>
+            <div class="stat-content">
+                <h3><?php echo $teamStats['active_members'] ?? 0; ?></h3>
+                <p>Active Team Members</p>
             </div>
         </div>
     </div>
@@ -164,6 +182,10 @@ try {
                 </div>
                 <div class="quick-stat-item">
                     <span class="label">Total Subscribers:</span>
+                <div class="quick-stat-item">
+                    <span class="label">Team Members:</span>
+                    <span class="value"><?php echo $teamStats['total_members'] ?? 0; ?></span>
+                </div>
                     <span class="value"><?php echo $stats['total_subscribers'] ?? 0; ?></span>
                 </div>
                 <div class="quick-stat-item">
