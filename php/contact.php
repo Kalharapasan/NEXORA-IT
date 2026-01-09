@@ -29,4 +29,10 @@ function validate_email($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
+$name = isset($_POST['name']) ? sanitize_input($_POST['name']) : '';
+$email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
+$phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
+$subject = isset($_POST['subject']) ? sanitize_input($_POST['subject']) : '';
+$message = isset($_POST['message']) ? sanitize_input($_POST['message']) : '';
+
 ?>
