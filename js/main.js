@@ -699,3 +699,64 @@ window.NexoraUtils = {
   getCookie,
   setCookie
 };
+
+// ============================================
+// LOAD TEAM MEMBERS FROM DATABASE
+// ============================================
+async function loadTeamMembers() {
+  const teamGrid = document.getElementById('teamGrid');
+  
+  if (!teamGrid) return;
+  
+  try {
+    const response = await fetch('php/get_team.php');
+    const data = await response.json();
+    
+    if (data.success && data.members && data.members.length > 0) {
+      teamGrid.innerHTML = '';
+      
+      data.members.forEach(member => {
+        const teamMemberDiv = document.createElement('div');
+        teamMemberDiv.className = 'team-member';
+        
+        // Create social links HTML
+        let socialLinks = '<div class="team-social">';
+        if (member.linkedin_url && member.linkedin_url !== '#') {
+          socialLinks += `<a href="${member.linkedin_url}" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>`;
+        }
+        if (member.twitter_url && member.twitter_url !== '#') {
+          socialLinks += `<a href="${member.twitter_url}" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>`;
+        }
+        if (member.github_url && member.github_url !== '#') {
+          socialLinks += `<a href="${member.github_url}" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>`;
+        }
+        socialLinks += '</div>';
+        
+        teamMemberDiv.innerHTML = `
+          <div class="team-image">
+            <img src="${member.image_url || 'https://via.placeholder.com/400x400?text=No+Image'}" 
+                 alt="${member.name}"
+                 onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+            ${socialLinks}
+          </div>
+          <h4>${member.name}</h4>
+          <p>${member.position}</p>
+        `;
+        
+        teamGrid.appendChild(teamMemberDiv);
+      });
+    } else {
+      teamGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #666;">No team members available at the moment.</p>';
+    }
+  } catch (error) {
+    console.error('Error loading team members:', error);
+    teamGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #666;">Unable to load team members. Please try again later.</p>';
+  }
+}
+
+// Load team members when page loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadTeamMembers);
+} else {
+  loadTeamMembers();
+}
