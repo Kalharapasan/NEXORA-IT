@@ -13,5 +13,9 @@ $config = [
     'from_email' => 'noreply@nexora.com',
     'from_name' => 'Nexora Website',
 ];
+$response = [
+    'success' => false,
+    'message' => ''
+];
 
 ?>
