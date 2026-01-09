@@ -189,4 +189,15 @@ $mail_sent = mail(
     implode("\r\n", $headers)
 );
 
+if ($mail_sent) {
+   
+    $log_entry = date('Y-m-d H:i:s') . " - Contact form submission from: $name ($email)\n";
+    @file_put_contents(__DIR__ . '/../logs/contact_submissions.log', $log_entry, FILE_APPEND);
+    
+    $response['success'] = true;
+    $response['message'] = 'Thank you for contacting us! We will get back to you soon.';
+} else {
+    $response['message'] = 'Sorry, there was an error sending your message. Please try again or contact us directly at ' . $config['recipient_email'];
+}
+
 ?>
