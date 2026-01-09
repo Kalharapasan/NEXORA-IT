@@ -29,4 +29,10 @@ define('BUSINESS_HOURS', '9:00 AM - 6:00 PM');
 define('BUSINESS_DAYS', 'Monday - Saturday');
 
 date_default_timezone_set(TIMEZONE);
+$stats = [
+    'clients' => 500,
+    'projects' => 1000,
+    'team_members' => 50,
+    'satisfaction' => 99
+];
 ?>
