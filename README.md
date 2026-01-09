@@ -16,7 +16,20 @@ nexora-website/
 │   ├── contact.php        # Contact form handler with DB storage
 │   ├── newsletter.php     # Newsletter subscription handler
 │   ├── database_setup.sql # Database schema and tables
+│   ├── admin_setup.sql    # Admin panel database setup
 │   └── README.md          # PHP backend documentation
+├── admin/                  # Admin Panel (NEW!)
+│   ├── login.php          # Admin login page
+│   ├── dashboard.php      # Main admin dashboard
+│   ├── contacts.php       # Manage contact messages
+│   ├── subscribers.php    # Manage newsletter subscribers
+│   ├── settings.php       # Admin settings & profile
+│   ├── logout.php         # Logout handler
+│   ├── includes/          # Authentication & common files
+│   ├── ajax/              # AJAX handlers
+│   ├── css/               # Admin panel styles
+│   ├── js/                # Admin panel JavaScript
+│   └── README.md          # Admin panel documentation
 └── README.md              # This file
 ```
 
@@ -46,6 +59,7 @@ nexora-website/
 - 🔒 Input validation and sanitization
 - 🛡️ SQL injection and XSS protection
 - ⚡ AJAX form submissions (no page reload)
+- 🔐 **Complete Admin Panel** - Manage all data with secure dashboard
 
 ### Sections
 1. **Hero Header** - Eye-catching introduction with CTAs and particle animation
@@ -60,16 +74,18 @@ nexora-website/
 
 ### Step 1: Database Setup
 
-1. **Create Database**
+1. **Create Database & Tables**
    ```bash
    # Option A: Using MySQL command line
    mysql -u root -p < php/database_setup.sql
+   mysql -u root -p < php/admin_setup.sql
    
    # Option B: Using phpMyAdmin
    # - Open phpMyAdmin
    # - Click "Import" tab
-   # - Select php/database_setup.sql
-   # - Click "Go"
+   # - Select php/database_setup.sql (import first)
+   # - Then select php/admin_setup.sql (import second)
+   # - Click "Go" for each
    ```
 
 2. **Configure Database Connection**
@@ -82,7 +98,7 @@ nexora-website/
    ```
 
 3. **Verify Database**
-   - Check that tables exist: `contact_messages` and `newsletter_subscribers`
+   - Check that tables exist: `contact_messages`, `newsletter_subscribers`, `admin_users`
    - Test connection by submitting contact form
 
 ### Step 2: Upload Files
@@ -146,6 +162,40 @@ See `php/README.md` for detailed SMTP setup instructions.
 - ✅ Admin notification for new subscribers
 - ✅ Active/inactive status management
 - ✅ Unsubscribe capability ready
+
+## 🔐 Admin Panel
+
+### Access Admin Panel
+- **URL:** `http://yourwebsite.com/admin/`
+- **Default Username:** `admin`
+- **Default Password:** `admin123`
+- ⚠️ **IMPORTANT:** Change password immediately after first login!
+
+### Admin Panel Features
+- 📊 **Dashboard** - Overview with statistics and recent activity
+- 📧 **Contact Messages** - View, search, filter, update status, export to CSV
+- 👥 **Newsletter Subscribers** - Manage subscribers, export data
+- ⚙️ **Settings** - Update profile, change password
+- 📥 **Data Export** - Download all data as CSV files
+- 🔐 **Secure Authentication** - Password hashing, session management
+- 📝 **Activity Logging** - Track all admin actions
+
+### Managing Contact Messages
+1. Login to admin panel
+2. Navigate to "Contact Messages"
+3. View all submitted messages with details
+4. Update status (new → read → replied → archived)
+5. Export to CSV for records
+6. Delete old or spam messages
+
+### Managing Newsletter Subscribers
+1. Go to "Newsletter Subscribers"
+2. View all subscribers with status
+3. Search by email or filter by status
+4. Export subscriber list for email campaigns
+5. Update status or remove subscribers
+
+For complete admin panel documentation, see [admin/README.md](admin/README.md)
 
 ### Basic Setup (PHP mail)
 Both systems are configured to use PHP's built-in mail() function.
