@@ -25,4 +25,7 @@ define('MAIL_RECIPIENT', 'nexorait@outlook.com');
 define('SITE_URL', 'https://www.nexora.com'); 
 define('TIMEZONE', 'Asia/Colombo');
 
+define('BUSINESS_HOURS', '9:00 AM - 6:00 PM');
+define('BUSINESS_DAYS', 'Monday - Saturday');
+
 ?>
