@@ -246,4 +246,7 @@ if ($mail_sent) {
     @mail($email, $auto_reply_subject, $auto_reply_body, implode("\r\n", $auto_reply_headers));
 }
 
+echo json_encode($response);
+exit;
+
 ?>
