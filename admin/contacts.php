@@ -305,4 +305,115 @@ function exportData(type) {
 }
 </script>
 
+<!-- Bulk Operations Scripts -->
+<script>
+let selectedIds = [];
+
+function toggleSelectAll(checkbox) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    checkboxes.forEach(cb => {
+        cb.checked = checkbox.checked;
+    });
+    updateBulkActions();
+}
+
+function updateBulkActions() {
+    const checkboxes = document.querySelectorAll('.row-checkbox:checked');
+    selectedIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    const bulkBar = document.getElementById('bulkActionsBar');
+    const bulkBtn = document.getElementById('bulkActionsBtn');
+    const countSpan = document.getElementById('selectedCount');
+    
+    if (selectedIds.length > 0) {
+        bulkBar.style.display = 'block';
+        bulkBtn.style.display = 'inline-block';
+        countSpan.textContent = `${selectedIds.length} selected`;
+    } else {
+        bulkBar.style.display = 'none';
+        bulkBtn.style.display = 'none';
+    }
+}
+
+function clearSelection() {
+    document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = false);
+    document.getElementById('selectAll').checked = false;
+    updateBulkActions();
+}
+
+async function performBulkAction(action) {
+    if (selectedIds.length === 0) {
+        alert('Please select at least one message');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('action', action);
+    formData.append('type', 'contacts');
+    selectedIds.forEach(id => formData.append('ids[]', id));
+    
+    try {
+        const response = await fetch('ajax/bulk_operations.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            location.reload();
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        alert('An error occurred during bulk operation');
+    }
+}
+
+function bulkMarkRead() {
+    if (confirm(`Mark ${selectedIds.length} message(s) as read?`)) {
+        performBulkAction('mark_read');
+    }
+}
+
+function bulkArchive() {
+    if (confirm(`Archive ${selectedIds.length} message(s)?`)) {
+        performBulkAction('archive');
+    }
+}
+
+function bulkDelete() {
+    if (confirm(`Delete ${selectedIds.length} message(s)? This cannot be undone!`)) {
+        performBulkAction('delete');
+    }
+}
+</script>
+
+<style>
+.bulk-actions-bar {
+    background: #E3F2FD;
+    border: 1px solid #2196F3;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bulk-actions-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bulk-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#selectedCount {
+    font-weight: 600;
+    color: #1976D2;
+}
+</style>
+
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

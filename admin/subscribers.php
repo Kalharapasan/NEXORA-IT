@@ -102,9 +102,33 @@ try {
 <div class="page-header">
     <h2><i class="fas fa-users"></i> Newsletter Subscribers</h2>
     <div class="page-actions">
+        <button onclick="showBulkActions()" class="btn-info" id="bulkActionsBtn" style="display: none;">
+            <i class="fas fa-tasks"></i> Bulk Actions
+        </button>
         <button onclick="exportData('subscribers')" class="btn-secondary">
             <i class="fas fa-download"></i> Export CSV
         </button>
+    </div>
+</div>
+
+<!-- Bulk Actions Bar -->
+<div id="bulkActionsBar" class="bulk-actions-bar" style="display: none;">
+    <div class="bulk-actions-content">
+        <span id="selectedCount">0 selected</span>
+        <div class="bulk-buttons">
+            <button onclick="bulkActivate()" class="btn-sm btn-success">
+                <i class="fas fa-check-circle"></i> Activate
+            </button>
+            <button onclick="bulkUnsubscribe()" class="btn-sm btn-warning">
+                <i class="fas fa-user-times"></i> Unsubscribe
+            </button>
+            <button onclick="bulkDelete()" class="btn-sm btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+            <button onclick="clearSelection()" class="btn-sm btn-secondary">
+                <i class="fas fa-times"></i> Clear
+            </button>
+        </div>
     </div>
 </div>
 
@@ -182,6 +206,7 @@ try {
             <table class="data-table">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
                         <th>ID</th>
                         <th>Email</th>
                         <th>Status</th>
@@ -194,6 +219,7 @@ try {
                 <tbody>
                     <?php foreach ($subscribers as $sub): ?>
                     <tr>
+                        <td><input type="checkbox" class="row-checkbox" value="<?php echo $sub['id']; ?>" onchange="updateBulkActions()"></td>
                         <td><?php echo $sub['id']; ?></td>
                         <td><a href="mailto:<?php echo htmlspecialchars($sub['email']); ?>"><?php echo htmlspecialchars($sub['email']); ?></a></td>
                         <td>
@@ -271,6 +297,115 @@ function deleteSubscriber(id) {
 function exportData(type) {
     window.location.href = `ajax/export.php?type=${type}`;
 }
+
+// Bulk Operations
+let selectedIds = [];
+
+function toggleSelectAll(checkbox) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    checkboxes.forEach(cb => {
+        cb.checked = checkbox.checked;
+    });
+    updateBulkActions();
+}
+
+function updateBulkActions() {
+    const checkboxes = document.querySelectorAll('.row-checkbox:checked');
+    selectedIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    const bulkBar = document.getElementById('bulkActionsBar');
+    const bulkBtn = document.getElementById('bulkActionsBtn');
+    const countSpan = document.getElementById('selectedCount');
+    
+    if (selectedIds.length > 0) {
+        bulkBar.style.display = 'block';
+        bulkBtn.style.display = 'inline-block';
+        countSpan.textContent = `${selectedIds.length} selected`;
+    } else {
+        bulkBar.style.display = 'none';
+        bulkBtn.style.display = 'none';
+    }
+}
+
+function clearSelection() {
+    document.querySelectorAll('.row-checkbox').forEach(cb => cb.checked = false);
+    document.getElementById('selectAll').checked = false;
+    updateBulkActions();
+}
+
+async function performBulkAction(action) {
+    if (selectedIds.length === 0) {
+        alert('Please select at least one subscriber');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('action', action);
+    formData.append('type', 'subscribers');
+    selectedIds.forEach(id => formData.append('ids[]', id));
+    
+    try {
+        const response = await fetch('ajax/bulk_operations.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            location.reload();
+        } else {
+            alert('Error: ' + result.message);
+        }
+    } catch (error) {
+        alert('An error occurred during bulk operation');
+    }
+}
+
+function bulkActivate() {
+    if (confirm(`Activate ${selectedIds.length} subscriber(s)?`)) {
+        performBulkAction('activate');
+    }
+}
+
+function bulkUnsubscribe() {
+    if (confirm(`Unsubscribe ${selectedIds.length} subscriber(s)?`)) {
+        performBulkAction('unsubscribe');
+    }
+}
+
+function bulkDelete() {
+    if (confirm(`Delete ${selectedIds.length} subscriber(s)? This cannot be undone!`)) {
+        performBulkAction('delete');
+    }
+}
 </script>
+
+<style>
+.bulk-actions-bar {
+    background: #E3F2FD;
+    border: 1px solid #2196F3;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.bulk-actions-content {
+    display: flex;
+    justify-space-between;
+    align-items: center;
+}
+
+.bulk-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#selectedCount {
+    font-weight: 600;
+    color: #1976D2;
+}
+</style>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
