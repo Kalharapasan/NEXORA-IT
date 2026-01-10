@@ -26,7 +26,26 @@ $response = [
 ];
 
 try {
- 
+    // ==========================================
+    // RATE LIMITING - Prevent spam
+    // ==========================================
+    function checkRateLimit($ip) {
+        $db = getDBConnection();
+        if (!$db) return true; // Allow if DB not available
+        
+        // Check submissions in last 5 minutes
+        $stmt = $db->prepare("SELECT COUNT(*) as count FROM contact_messages 
+                             WHERE ip_address = ? AND created_at > DATE_SUB(NOW(), INTERVAL 5 MINUTE)");
+        $stmt->execute([$ip]);
+        $result = $stmt->fetch();
+        
+        // Allow max 3 submissions per 5 minutes
+        return ($result['count'] < 3);
+    }
+    
+    // ==========================================
+    // SANITIZE INPUT FUNCTION
+    // ==========================================
     function sanitizeInput($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -39,11 +58,25 @@ try {
     }
 
     function validatePhone($phone) {
-    
+        // Enhanced phone validation
         return preg_match('/^[\d\s\+\-\(\)]{10,}$/', $phone);
     }
+    
+    // ==========================================
+    // CHECK RATE LIMIT
+    // ==========================================
+    $ip_address = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    
+    if (!checkRateLimit($ip_address)) {
+        http_response_code(429);
+        $response['message'] = 'Too many requests. Please try again in a few minutes.';
+        echo json_encode($response);
+        exit;
+    }
 
-
+    // ==========================================
+    // GET AND SANITIZE INPUT
+    // ==========================================
     $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
     $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
     $phone = isset($_POST['phone']) ? sanitizeInput($_POST['phone']) : '';
