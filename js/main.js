@@ -299,12 +299,12 @@ document.addEventListener('DOMContentLoaded', function() {
           contactForm.reset();
           
           // Send confirmation email or notification
-          console.log('Form submitted successfully:', result);
+          // console.log('Form submitted successfully:', result);
         } else {
           showFormStatus(result.message || 'Something went wrong. Please try again.', 'error');
         }
       } catch (error) {
-        console.error('Form submission error:', error);
+        // console.error('Form submission error:', error);
         showFormStatus('Unable to send message. Please try again or contact us directly.', 'error');
       } finally {
         submitButton.innerHTML = originalButtonHTML;
@@ -358,7 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
           alert('Subscription failed. Please try again.');
         }
       } catch (error) {
-        console.error('Newsletter subscription error:', error);
+        // console.error('Newsletter subscription error:', error);
         alert('Unable to subscribe. Please try again later.');
       } finally {
         submitButton.innerHTML = originalButtonText;
@@ -562,7 +562,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const perfObserver = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         // Log performance metrics for debugging
-        console.log('Performance:', entry.name, entry.duration);
+        // console.log('Performance:', entry.name, entry.duration);
       }
     });
 
@@ -570,7 +570,7 @@ document.addEventListener('DOMContentLoaded', function() {
       perfObserver.observe({ entryTypes: ['measure', 'navigation'] });
     } catch (e) {
       // Browser doesn't support this type
-      console.log('Performance observer not supported');
+      // console.log('Performance observer not supported');
     }
   }
 
@@ -615,8 +615,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // ============================================
   // CONSOLE LOG - INITIALIZATION COMPLETE
   // ============================================
-  console.log('%c🚀 Nexora Website Initialized Successfully!', 'color: #3d6cb9; font-size: 16px; font-weight: bold;');
-  console.log('%cDeveloped with ❤️ by Nexora Team', 'color: #666; font-size: 12px;');
+  // console.log('%c🚀 Nexora Website Initialized Successfully!', 'color: #3d6cb9; font-size: 16px; font-weight: bold;');
+  // console.log('%cDeveloped with ❤️ by Nexora Team', 'color: #666; font-size: 12px;');
+  
+  // Set dynamic copyright year
+  const yearElement = document.getElementById('currentYear');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+  }
   
 });
 
@@ -749,7 +755,7 @@ async function loadTeamMembers() {
       teamGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #666;">No team members available at the moment.</p>';
     }
   } catch (error) {
-    console.error('Error loading team members:', error);
+    // console.error('Error loading team members:', error);
     teamGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #666;">Unable to load team members. Please try again later.</p>';
   }
 }
