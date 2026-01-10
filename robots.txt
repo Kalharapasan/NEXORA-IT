@@ -1,0 +1,55 @@
+# Nexora IT - Robots.txt Configuration
+# Updated: January 10, 2026
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin area
+Disallow: /admin/
+Disallow: /php/
+Disallow: /Sql/
+Disallow: /logs/
+
+# Disallow sensitive files
+Disallow: /*.sql$
+Disallow: /*.log$
+Disallow: /*config.php$
+Disallow: /.htaccess
+Disallow: /.git/
+
+# Allow specific directories
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /Doc/
+
+# Sitemap location (update with your actual sitemap URL)
+Sitemap: https://www.nexora.com/sitemap.xml
+
+# Crawl delay (optional, adjust if needed)
+# Crawl-delay: 10
+
+# Specific bot rules (if needed)
+# User-agent: Googlebot
+# Allow: /
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# SEO Tips:
+# 1. Create and submit a sitemap.xml file
+# 2. Verify with Google Search Console
+# 3. Use structured data (JSON-LD)
+# 4. Optimize page speed
+# 5. Ensure mobile-friendly design
