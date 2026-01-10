@@ -46,6 +46,11 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
+                <hr style="margin: 10px 20px; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
+                <a href="../index.html" target="_blank" class="nav-item">
+                    <i class="fas fa-globe"></i>
+                    <span>View Website</span>
+                </a>
                 <a href="logout.php" class="nav-item">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
