@@ -62,8 +62,28 @@ try {
             $displayOrder = $data['displayOrder'] ?? 0;
             $status = $data['status'] ?? 'active';
             
+            // Enhanced validation
             if (empty($name) || empty($position)) {
+                http_response_code(400);
                 echo json_encode(['success' => false, 'message' => 'Name and position are required']);
+                exit();
+            }
+            
+            if (strlen($name) < 2 || strlen($name) > 100) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Name must be between 2 and 100 characters']);
+                exit();
+            }
+            
+            if (strlen($position) < 2 || strlen($position) > 100) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Position must be between 2 and 100 characters']);
+                exit();
+            }
+            
+            if ($imageUrl && !filter_var($imageUrl, FILTER_VALIDATE_URL)) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'message' => 'Invalid image URL format']);
                 exit();
             }
             
@@ -77,8 +97,10 @@ try {
             ]);
             
             if ($result) {
-                echo json_encode(['success' => true, 'message' => 'Team member added successfully']);
+                http_response_code(201); // Created
+                echo json_encode(['success' => true, 'message' => 'Team member added successfully', 'id' => $db->lastInsertId()]);
             } else {
+                http_response_code(500);
                 echo json_encode(['success' => false, 'message' => 'Error adding team member']);
             }
             break;

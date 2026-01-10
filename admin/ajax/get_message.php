@@ -7,6 +7,7 @@ header('Content-Type: application/json');
 $messageId = intval($_GET['id'] ?? 0);
 
 if ($messageId <= 0) {
+    http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Invalid message ID']);
     exit();
 }
@@ -20,6 +21,7 @@ try {
     $message = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$message) {
+        http_response_code(404);
         echo json_encode(['success' => false, 'message' => 'Message not found']);
         exit();
     }
@@ -53,5 +55,6 @@ try {
     
 } catch (Exception $e) {
     error_log("Get message error: " . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'An error occurred']);
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'An error occurred while retrieving the message']);
 }
