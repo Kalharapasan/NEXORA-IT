@@ -146,6 +146,19 @@ try {
             $messageId = $db->lastInsertId();
             $response['data']['message_id'] = $messageId;
             
+            // Create notification for admins
+            try {
+                require_once __DIR__ . '/../admin/includes/notifications.php';
+                notifyNewContact([
+                    'id' => $messageId,
+                    'name' => $name,
+                    'email' => $email,
+                    'subject' => $subject
+                ]);
+            } catch (Exception $e) {
+                error_log("Notification creation error: " . $e->getMessage());
+            }
+            
         } catch (PDOException $e) {
             
             error_log("Database Error: " . $e->getMessage());
