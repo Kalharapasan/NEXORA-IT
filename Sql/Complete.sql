@@ -523,6 +523,84 @@ SELECT id, username, email, full_name, role, is_active, created_at FROM admin_us
 SELECT 'System Settings:' as Info;
 SELECT setting_key, setting_value, category FROM system_settings ORDER BY category, setting_key;
 
+-- Show email templates
+SELECT 'Email Templates:' as Info;
+SELECT id, name, template_type, is_active FROM email_templates;
+
+-- ==========================================
+-- ADDITIONAL HELPER QUERIES
+-- ==========================================
+
+-- Query to check database structure
+SELECT 'Database Structure Check:' as Info;
+SELECT 
+    TABLE_NAME as 'Table',
+    TABLE_ROWS as 'Rows',
+    ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024, 2) as 'Size (MB)',
+    ENGINE as 'Engine',
+    TABLE_COLLATION as 'Collation'
+FROM information_schema.TABLES
+WHERE TABLE_SCHEMA = 'nexora_db'
+ORDER BY TABLE_NAME;
+
+-- Query to list all indexes
+SELECT 'Database Indexes:' as Info;
+SELECT 
+    TABLE_NAME as 'Table',
+    INDEX_NAME as 'Index',
+    GROUP_CONCAT(COLUMN_NAME ORDER BY SEQ_IN_INDEX) as 'Columns',
+    INDEX_TYPE as 'Type',
+    CASE NON_UNIQUE 
+        WHEN 0 THEN 'UNIQUE'
+        ELSE 'NON-UNIQUE'
+    END as 'Uniqueness'
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = 'nexora_db'
+GROUP BY TABLE_NAME, INDEX_NAME, INDEX_TYPE, NON_UNIQUE
+ORDER BY TABLE_NAME, INDEX_NAME;
+
+-- Query to list all foreign keys
+SELECT 'Foreign Key Constraints:' as Info;
+SELECT 
+    CONSTRAINT_NAME as 'Constraint',
+    TABLE_NAME as 'Table',
+    COLUMN_NAME as 'Column',
+    REFERENCED_TABLE_NAME as 'References Table',
+    REFERENCED_COLUMN_NAME as 'References Column'
+FROM information_schema.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = 'nexora_db'
+    AND REFERENCED_TABLE_NAME IS NOT NULL
+ORDER BY TABLE_NAME, CONSTRAINT_NAME;
+
+-- Query to list all views
+SELECT 'Database Views:' as Info;
+SELECT 
+    TABLE_NAME as 'View Name',
+    VIEW_DEFINITION as 'Definition'
+FROM information_schema.VIEWS
+WHERE TABLE_SCHEMA = 'nexora_db';
+
+-- Query to list all stored procedures
+SELECT 'Stored Procedures:' as Info;
+SELECT 
+    ROUTINE_NAME as 'Procedure',
+    ROUTINE_TYPE as 'Type',
+    DATA_TYPE as 'Returns',
+    ROUTINE_DEFINITION as 'Definition'
+FROM information_schema.ROUTINES
+WHERE ROUTINE_SCHEMA = 'nexora_db';
+
+-- Query to list all triggers
+SELECT 'Database Triggers:' as Info;
+SELECT 
+    TRIGGER_NAME as 'Trigger',
+    EVENT_MANIPULATION as 'Event',
+    EVENT_OBJECT_TABLE as 'Table',
+    ACTION_TIMING as 'Timing'
+FROM information_schema.TRIGGERS
+WHERE TRIGGER_SCHEMA = 'nexora_db'
+ORDER BY EVENT_OBJECT_TABLE, TRIGGER_NAME;
+
 -- ==========================================
 -- SETUP COMPLETE
 -- ==========================================
