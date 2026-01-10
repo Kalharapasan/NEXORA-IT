@@ -127,6 +127,17 @@ try {
                 $subscriberId = $db->lastInsertId();
                 $response['data']['subscriber_id'] = $subscriberId;
                 $response['data']['action'] = 'subscribed';
+                
+                // Create notification for admins
+                try {
+                    require_once __DIR__ . '/../admin/includes/notifications.php';
+                    notifyNewSubscriber([
+                        'id' => $subscriberId,
+                        'email' => $email
+                    ]);
+                } catch (Exception $e) {
+                    error_log("Notification creation error: " . $e->getMessage());
+                }
             }
 
         } catch (PDOException $e) {
