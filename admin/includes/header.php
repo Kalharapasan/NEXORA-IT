@@ -42,6 +42,24 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <i class="fas fa-user-friends"></i>
                     <span>Team Management</span>
                 </a>
+                
+                <div class="nav-divider">Admin Tools</div>
+                
+                <?php if ($currentAdmin['role'] === 'super_admin'): ?>
+                <a href="admin_users.php" class="nav-item <?php echo $currentPage === 'admin_users' ? 'active' : ''; ?>">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin Users</span>
+                </a>
+                <?php endif; ?>
+                
+                <a href="activity_logs.php" class="nav-item <?php echo $currentPage === 'activity_logs' ? 'active' : ''; ?>">
+                    <i class="fas fa-history"></i>
+                    <span>Activity Logs</span>
+                </a>
+                <a href="system_info.php" class="nav-item <?php echo $currentPage === 'system_info' ? 'active' : ''; ?>">
+                    <i class="fas fa-info-circle"></i>
+                    <span>System Info</span>
+                </a>
                 <a href="settings.php" class="nav-item <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
