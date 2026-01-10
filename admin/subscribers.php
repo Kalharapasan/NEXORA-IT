@@ -393,7 +393,7 @@ function bulkDelete() {
 
 .bulk-actions-content {
     display: flex;
-    justify-space-between;
+    justify-content: space-between;
     align-items: center;
 }
 

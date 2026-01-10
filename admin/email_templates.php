@@ -36,7 +36,7 @@ try {
                 }
                 
                 // Log activity
-                logAdminActivity($_SESSION['admin_id'], 'email_template_' . $action, "Email template: $name", $_SERVER['REMOTE_ADDR']);
+                logAdminActivity($_SESSION['admin_id'], 'email_template_' . $action, "Email template: $name");
             }
             
             if ($action === 'delete') {
@@ -45,7 +45,7 @@ try {
                 $stmt->execute([$id]);
                 $message = "Template deleted successfully!";
                 
-                logAdminActivity($_SESSION['admin_id'], 'email_template_delete', "Template ID: $id", $_SERVER['REMOTE_ADDR']);
+                logAdminActivity($_SESSION['admin_id'], 'email_template_delete', "Template ID: $id");
             }
             
             if ($action === 'toggle_status') {

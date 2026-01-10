@@ -58,7 +58,7 @@ try {
         }
         
         if ($updatedCount > 0) {
-            logAdminActivity($_SESSION['admin_id'], 'settings_update', "Updated $updatedCount settings", $_SERVER['REMOTE_ADDR']);
+            logAdminActivity($_SESSION['admin_id'], 'settings_update', "Updated $updatedCount settings");
             $message = "Settings updated successfully! ($updatedCount settings changed)";
         }
     }
