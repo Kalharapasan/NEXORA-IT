@@ -567,7 +567,7 @@ function openEditModal(id) {
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            // console.error('Error:', error);
             showAlert('Error loading member data', 'error');
         });
 }
@@ -603,7 +603,7 @@ function deleteMember(id) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         showAlert('Error deleting team member', 'error');
     });
 }
@@ -648,7 +648,7 @@ document.getElementById('teamForm').addEventListener('submit', function(e) {
         }
     })
     .catch(error => {
-        console.error('Error:', error);
+        // console.error('Error:', error);
         showAlert('Error saving team member', 'error');
     });
 });
