@@ -30,6 +30,23 @@ $response = [
 
 try {
     // ==========================================
+    // RATE LIMITING - Prevent spam
+    // ==========================================
+    function checkRateLimit($ip) {
+        $db = getDBConnection();
+        if (!$db) return true; // Allow if DB not available
+        
+        // Check subscriptions in last 10 minutes
+        $stmt = $db->prepare("SELECT COUNT(*) as count FROM newsletter_subscribers 
+                             WHERE ip_address = ? AND created_at > DATE_SUB(NOW(), INTERVAL 10 MINUTE)");
+        $stmt->execute([$ip]);
+        $result = $stmt->fetch();
+        
+        // Allow max 2 subscriptions per 10 minutes
+        return ($result['count'] < 2);
+    }
+    
+    // ==========================================
     // SANITIZE INPUT FUNCTION
     // ==========================================
     function sanitizeInput($data) {
@@ -42,6 +59,18 @@ try {
  
     function validateEmail($email) {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+    
+    // ==========================================
+    // CHECK RATE LIMIT
+    // ==========================================
+    $ip_address = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+    
+    if (!checkRateLimit($ip_address)) {
+        http_response_code(429);
+        $response['message'] = 'Too many subscription attempts. Please try again later.';
+        echo json_encode($response);
+        exit;
     }
 
     $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
