@@ -95,9 +95,33 @@ try {
 <div class="page-header">
     <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
     <div class="page-actions">
+        <button onclick="showBulkActions()" class="btn-info" id="bulkActionsBtn" style="display: none;">
+            <i class="fas fa-tasks"></i> Bulk Actions
+        </button>
         <button onclick="exportData('contacts')" class="btn-secondary">
             <i class="fas fa-download"></i> Export CSV
         </button>
+    </div>
+</div>
+
+<!-- Bulk Actions Bar -->
+<div id="bulkActionsBar" class="bulk-actions-bar" style="display: none;">
+    <div class="bulk-actions-content">
+        <span id="selectedCount">0 selected</span>
+        <div class="bulk-buttons">
+            <button onclick="bulkMarkRead()" class="btn-sm btn-info">
+                <i class="fas fa-check"></i> Mark as Read
+            </button>
+            <button onclick="bulkArchive()" class="btn-sm btn-warning">
+                <i class="fas fa-archive"></i> Archive
+            </button>
+            <button onclick="bulkDelete()" class="btn-sm btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </button>
+            <button onclick="clearSelection()" class="btn-sm btn-secondary">
+                <i class="fas fa-times"></i> Clear
+            </button>
+        </div>
     </div>
 </div>
 
@@ -144,6 +168,7 @@ try {
             <table class="data-table">
                 <thead>
                     <tr>
+                        <th><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -158,6 +183,7 @@ try {
                 <tbody>
                     <?php foreach ($messages as $msg): ?>
                     <tr>
+                        <td><input type="checkbox" class="row-checkbox" value="<?php echo $msg['id']; ?>" onchange="updateBulkActions()"></td>
                         <td><?php echo $msg['id']; ?></td>
                         <td><?php echo htmlspecialchars($msg['name']); ?></td>
                         <td><a href="mailto:<?php echo htmlspecialchars($msg['email']); ?>"><?php echo htmlspecialchars($msg['email']); ?></a></td>
