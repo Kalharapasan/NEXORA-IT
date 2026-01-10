@@ -1563,6 +1563,15 @@ footer {
   color: var(--accent-bright);
 }
 
+.footer-links .admin-link {
+  opacity: 0.5;
+  font-size: 0.9em;
+}
+
+.footer-links .admin-link:hover {
+  opacity: 1;
+}
+
 /* ==========================================
    FLOATING BUTTONS
    ========================================== */
