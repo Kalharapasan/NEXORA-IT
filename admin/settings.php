@@ -15,8 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
         $error = 'All fields are required';
     } elseif ($newPassword !== $confirmPassword) {
         $error = 'New passwords do not match';
-    } elseif (strlen($newPassword) < 6) {
-        $error = 'Password must be at least 6 characters long';
+    } elseif (strlen($newPassword) < 8) {
+        $error = 'Password must be at least 8 characters long';
+    } elseif (!preg_match('/[A-Z]/', $newPassword)) {
+        $error = 'Password must contain at least one uppercase letter';
+    } elseif (!preg_match('/[a-z]/', $newPassword)) {
+        $error = 'Password must contain at least one lowercase letter';
+    } elseif (!preg_match('/[0-9]/', $newPassword)) {
+        $error = 'Password must contain at least one number';
     } else {
         try {
             $db = getDBConnection();
@@ -52,8 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     
     if (empty($fullName) || empty($email)) {
         $error = 'Full name and email are required';
+    } elseif (strlen($fullName) < 2 || strlen($fullName) > 100) {
+        $error = 'Full name must be between 2 and 100 characters';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email format';
+    } elseif (strlen($email) > 255) {
+        $error = 'Email address is too long';
     } else {
         try {
             $db = getDBConnection();

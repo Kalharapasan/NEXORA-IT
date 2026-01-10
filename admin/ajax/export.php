@@ -31,7 +31,8 @@ try {
         $headers = ['ID', 'Email', 'Status', 'IP Address', 'Subscribed Date', 'Unsubscribed Date'];
         
     } else {
-        die('Invalid export type');
+        http_response_code(400);
+        die('Invalid export type. Allowed types: contacts, subscribers');
     }
     
     // Log the export activity
@@ -60,5 +61,6 @@ try {
     
 } catch (Exception $e) {
     error_log("Export error: " . $e->getMessage());
-    die('An error occurred during export');
+    http_response_code(500);
+    die('An error occurred during export. Please try again or contact support.');
 }
