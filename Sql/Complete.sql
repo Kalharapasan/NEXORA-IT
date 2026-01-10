@@ -390,15 +390,53 @@ END //
 DELIMITER ;
 
 -- ==========================================
--- SAMPLE DATA (OPTIONAL)
+-- SAMPLE DATA (OPTIONAL - UNCOMMENT TO USE)
 -- ==========================================
 
--- Sample Team Members (Uncomment to use)
+-- Sample Team Members
 /*
-INSERT INTO team_members (name, position, bio, image_url, email, display_order, status) VALUES
-('John Doe', 'CEO & Founder', 'Visionary leader with 15+ years in tech industry', 'images/team/john.jpg', 'john@nexorait.com', 1, 'active'),
-('Jane Smith', 'CTO', 'Technology expert specializing in cloud solutions', 'images/team/jane.jpg', 'jane@nexorait.com', 2, 'active'),
-('Mike Johnson', 'Lead Developer', 'Full-stack developer with expertise in modern frameworks', 'images/team/mike.jpg', 'mike@nexorait.com', 3, 'active');
+INSERT INTO team_members (name, position, bio, image_url, linkedin_url, email, display_order, status) VALUES
+('John Doe', 'CEO & Founder', 'Visionary leader with 15+ years in tech industry. Expert in business strategy and digital transformation.', 'images/team/john.jpg', 'https://linkedin.com/in/johndoe', 'john@nexorait.com', 1, 'active'),
+('Jane Smith', 'CTO', 'Technology expert specializing in cloud solutions and enterprise architecture. AWS & Azure certified.', 'images/team/jane.jpg', 'https://linkedin.com/in/janesmith', 'jane@nexorait.com', 2, 'active'),
+('Mike Johnson', 'Lead Developer', 'Full-stack developer with expertise in modern frameworks. Specializes in React, Node.js, and Python.', 'images/team/mike.jpg', 'https://linkedin.com/in/mikejohnson', 'mike@nexorait.com', 3, 'active'),
+('Sarah Williams', 'Project Manager', 'Agile certified project manager with 10+ years experience. Expert in Scrum and Kanban methodologies.', 'images/team/sarah.jpg', 'https://linkedin.com/in/sarahwilliams', 'sarah@nexorait.com', 4, 'active'),
+('David Brown', 'UX/UI Designer', 'Creative designer focused on user experience. Proficient in Figma, Adobe XD, and user research.', 'images/team/david.jpg', 'https://linkedin.com/in/davidbrown', 'david@nexorait.com', 5, 'active');
+*/
+
+-- Sample Contact Messages
+/*
+INSERT INTO contact_messages (name, email, phone, subject, message, ip_address, status, created_at) VALUES
+('Alice Cooper', 'alice@example.com', '+1-555-0101', 'Web Development Inquiry', 'Hi, I am interested in developing a new e-commerce website for my business. Could you please provide more information about your services and pricing?', '192.168.1.100', 'new', NOW()),
+('Bob Wilson', 'bob@example.com', '+1-555-0102', 'Mobile App Development', 'Looking for a team to develop a mobile app for iOS and Android. Do you have experience with Flutter or React Native?', '192.168.1.101', 'read', NOW() - INTERVAL 1 DAY),
+('Carol Martinez', 'carol@example.com', '+1-555-0103', 'Cloud Migration Services', 'We need help migrating our infrastructure to AWS. What is your process and timeline?', '192.168.1.102', 'replied', NOW() - INTERVAL 2 DAY),
+('Daniel Lee', 'daniel@example.com', '+1-555-0104', 'UI/UX Design', 'Can you redesign our existing website? We need a modern, responsive design.', '192.168.1.103', 'new', NOW() - INTERVAL 3 DAY);
+*/
+
+-- Sample Newsletter Subscribers
+/*
+INSERT INTO newsletter_subscribers (email, ip_address, status, created_at) VALUES
+('subscriber1@example.com', '192.168.1.200', 'active', NOW()),
+('subscriber2@example.com', '192.168.1.201', 'active', NOW() - INTERVAL 1 DAY),
+('subscriber3@example.com', '192.168.1.202', 'active', NOW() - INTERVAL 2 DAY),
+('subscriber4@example.com', '192.168.1.203', 'active', NOW() - INTERVAL 5 DAY),
+('subscriber5@example.com', '192.168.1.204', 'unsubscribed', NOW() - INTERVAL 10 DAY);
+*/
+
+-- Sample Admin Users (Additional admins)
+/*
+INSERT INTO admin_users (username, password, email, full_name, role, is_active) VALUES
+('john_admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'john@nexorait.com', 'John Doe', 'admin', 1),
+('jane_admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'jane@nexorait.com', 'Jane Smith', 'admin', 1),
+('viewer_user', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'viewer@nexorait.com', 'Viewer User', 'viewer', 1);
+-- Note: All sample users have password: admin123
+*/
+
+-- Sample Notifications
+/*
+INSERT INTO admin_notifications (admin_id, title, message, notification_type, is_read, created_at) VALUES
+(1, 'Welcome to NEXORA IT Admin Panel', 'Your admin account has been set up successfully. Explore the features!', 'success', 0, NOW()),
+(1, 'New Contact Message', 'You have received a new contact message from Alice Cooper.', 'info', 0, NOW() - INTERVAL 2 HOUR),
+(1, 'New Newsletter Subscriber', 'A new user has subscribed to your newsletter.', 'success', 1, NOW() - INTERVAL 1 DAY);
 */
 
 -- ==========================================
