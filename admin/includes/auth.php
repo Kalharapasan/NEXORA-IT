@@ -133,8 +133,15 @@ function logAdminActivity($adminId, $action, $description = null) {
         $db = getDBConnection();
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
         
-        $stmt = $db->prepare("INSERT INTO admin_activity_log (admin_id, action, description, ip_address, created_at) VALUES (?, ?, ?, ?, NOW())");
-        $stmt->execute([$adminId, $action, $description, $ip]);
+        // Try both table names for compatibility
+        try {
+            $stmt = $db->prepare("INSERT INTO admin_activity_logs (admin_id, action, description, ip_address, created_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->execute([$adminId, $action, $description, $ip]);
+        } catch (Exception $e1) {
+            // Fall back to singular table name
+            $stmt = $db->prepare("INSERT INTO admin_activity_log (admin_id, action, description, ip_address, created_at) VALUES (?, ?, ?, ?, NOW())");
+            $stmt->execute([$adminId, $action, $description, $ip]);
+        }
     } catch (Exception $e) {
         error_log("Activity log error: " . $e->getMessage());
     }
