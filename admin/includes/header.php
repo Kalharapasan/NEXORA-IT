@@ -43,12 +43,38 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <span>Team Management</span>
                 </a>
                 
+                <div class="nav-divider">Content</div>
+                
+                <a href="email_templates.php" class="nav-item <?php echo $currentPage === 'email_templates' ? 'active' : ''; ?>">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Email Templates</span>
+                </a>
+                <a href="notifications.php" class="nav-item <?php echo $currentPage === 'notifications' ? 'active' : ''; ?>">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                    <?php
+                    try {
+                        $db = getDBConnection();
+                        $stmt = $db->prepare("SELECT COUNT(*) as unread FROM admin_notifications WHERE admin_id = ? AND is_read = 0");
+                        $stmt->execute([$_SESSION['admin_id']]);
+                        $unreadCount = $stmt->fetchColumn();
+                        if ($unreadCount > 0) {
+                            echo '<span class="nav-badge">' . $unreadCount . '</span>';
+                        }
+                    } catch (Exception $e) {}
+                    ?>
+                </a>
+                
                 <div class="nav-divider">Admin Tools</div>
                 
                 <?php if ($currentAdmin['role'] === 'super_admin'): ?>
                 <a href="admin_users.php" class="nav-item <?php echo $currentPage === 'admin_users' ? 'active' : ''; ?>">
                     <i class="fas fa-user-shield"></i>
                     <span>Admin Users</span>
+                </a>
+                <a href="system_settings.php" class="nav-item <?php echo $currentPage === 'system_settings' ? 'active' : ''; ?>">
+                    <i class="fas fa-cogs"></i>
+                    <span>System Settings</span>
                 </a>
                 <?php endif; ?>
                 
@@ -61,8 +87,8 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
                     <span>System Info</span>
                 </a>
                 <a href="settings.php" class="nav-item <?php echo $currentPage === 'settings' ? 'active' : ''; ?>">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
+                    <i class="fas fa-user-cog"></i>
+                    <span>My Settings</span>
                 </a>
                 <hr style="margin: 10px 20px; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
                 <a href="../index.html" target="_blank" class="nav-item">
